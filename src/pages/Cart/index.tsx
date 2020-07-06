@@ -39,23 +39,25 @@ const Cart: React.FC = () => {
   const { increment, decrement, products } = useCart();
 
   function handleIncrement(id: string): void {
-    // TODO
+    increment(id);
   }
 
   function handleDecrement(id: string): void {
-    // TODO
+    decrement(id);
   }
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
-
-    return formatValue(0);
+    const total = products.reduce((acc, product) => {
+      return acc + product.quantity * product.price;
+    }, 0);
+    return formatValue(total);
   }, [products]);
 
   const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
-
-    return 0;
+    const quantity = products.reduce((acc, product) => {
+      return acc + product.quantity;
+    }, 0);
+    return quantity;
   }, [products]);
 
   return (
@@ -105,6 +107,7 @@ const Cart: React.FC = () => {
           )}
         />
       </ProductContainer>
+      {/* <FloatingCart /> */}
       <TotalProductsContainer>
         <FeatherIcon name="shopping-cart" color="#fff" size={24} />
         <TotalProductsText>{`${totalItensInCart} itens`}</TotalProductsText>
